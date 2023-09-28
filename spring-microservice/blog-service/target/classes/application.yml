@@ -1,0 +1,42 @@
+server:
+  port: 8071
+
+
+spring:
+  application:
+    name: blog-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_URL:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB_NAME:blog-service-db}?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:Root@1234}
+    hikari:
+      initialization-fail-timeout: 0
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+
+
+#Security
+# If you used '-' in secret then we should need to encode base64 otherwise not needed
+jwt:
+  secret: software-architecture-jwt-secret
+  #jwt.secret=softwarelaskjgldjglsdjglsjdlhjdflhjdflhjlkdfjh
+  # Expired in 15 min
+  token:
+    expire-seconds: 900000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
